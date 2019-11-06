@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: './assets/post-loop-block.js',
+    entry: './assets/js/post-loop-block.js',
     output: {
         filename: 'post-loop-block.js',
-        path: path.resolve(__dirname, 'assets/dist'),
+        path: path.resolve(__dirname, 'assets/dist/js'),
     },
     module: {
         rules: [

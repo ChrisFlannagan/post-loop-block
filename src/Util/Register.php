@@ -12,11 +12,12 @@ class Register {
 	}
 
 	public static function register() {
-		$url = sprintf( '%s/assets/dist/post-loop-block.js', FLANNY_PLB_URL );
+		$url = sprintf( '%s/assets/dist/js/post-loop-block.js', FLANNY_PLB_URL );
 		wp_register_script(
 			self::JS_HANDLE,
 			$url,
-			[ 'wp-blocks', 'wp-element' ]
+			[ 'wp-blocks', 'wp-element' ],
+			FLANNY_PLB_VER
 		);
 
 		register_block_type( self::BLOCK_NAME, [ 'editor_script' => self::JS_HANDLE ] );
