@@ -1,0 +1,15 @@
+{
+  "name": "chrisflannagan/post-loop-block",
+  "type": "project",
+  "description": "A WP Gutenberg block for display user defined amount of posts.",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "autoload": {
+    "psr-4": {
+      "Flanny\\PLB\\": "src/"
+    }
+  }
+}
