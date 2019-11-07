@@ -25,7 +25,7 @@ class Render {
 			return '';
 		}
 
-		return $this->get_posts_display( $attributes[ Register::NUM_POSTS_ATT ], $attributes[ Register::NUM_POSTS_ATT ] );
+		return $this->get_posts_display( $attributes[ Register::NUM_POSTS_ATT ], $attributes[ Register::NUM_PAGE_ATT ] );
 	}
 
 	/**
@@ -38,9 +38,18 @@ class Render {
 		$query = $this->get_query( $per_page, $page );
 		$posts = $query->get_posts();
 		ob_start();
+		printf( '<div data-js="%s" data-per-page="%d" data-page="%d">', Register::BLOCK_JS, $per_page, $page );
+		printf( '<div class="posts">' );
 		foreach ( $posts as $post ) {
 			include sprintf( '%s/assets/templates/post.php', FLANNY_PLB_PATH );
 		}
+		echo '</div>';
+
+		// If front end we need to include buttons html
+		if ( ! isset( $_REQUEST['context'] ) || $_REQUEST['context'] !== 'edit' ) {
+			include sprintf( '%s/assets/templates/buttons.php', FLANNY_PLB_PATH );
+		}
+		echo '</div>';
 
 		return ob_get_clean();
 	}

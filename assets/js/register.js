@@ -104,7 +104,7 @@ registerBlockType(blockName, {
             </div>
         );
     },
-    save:       (props) => {
+    save: (props) => {
         return null;
     },
 });

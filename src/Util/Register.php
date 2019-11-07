@@ -4,21 +4,34 @@ namespace Flanny\PLB\Util;
 
 use Flanny\PLB\Core;
 
+/**
+ * Class Register
+ *
+ * @package Flanny\PLB\Util
+ */
 class Register {
 
-	const BLOCK_NAME = 'flanny/post-loop-block';
-	const JS_HANDLE  = 'flanny-post-loop-block-js';
-	const CSS_HANDLE = 'flanny-post-loop-block-css';
+	const BLOCK_NAME   = 'flanny/post-loop-block';
+	const BLOCK_JS     = 'flanny-post-loop-block';
+	const JS_HANDLE    = 'flanny-post-loop-block-js';
+	const JS_HANDLE_FE = 'flanny-post-loop-block-fe-js';
+	const CSS_HANDLE   = 'flanny-post-loop-block-css';
 
 	const NUM_POSTS_ATT = 'numberPosts';
 	const NUM_PAGE_ATT  = 'page';
-	const NUM_TOTAL_ATT = 'totalPages';
 	const DEFAULT_NUM   = 3;
 
+	/**
+	 * Register all hooks
+	 */
 	public static function hook() {
 		add_action( 'init', [ self::class, 'register' ] );
+		add_action( 'wp_enqueue_scripts', [ self::class, 'frontend' ] );
 	}
 
+	/**
+	 * Register our block and required styles/scripts for editor
+	 */
 	public static function register() {
 		$js_url         = sprintf( '%s/assets/dist/js/post-loop-block.js', FLANNY_PLB_URL );
 		$css_editor_url = sprintf( '%s/assets/css/post-loop-block.css', FLANNY_PLB_URL );
@@ -58,6 +71,22 @@ class Register {
 				],
 			],
 		] );
+	}
+
+	/**
+	 * Register needed assets for the front end only
+	 */
+	public static function frontend() {
+		if ( ! has_block( self::BLOCK_NAME ) ) {
+			return;
+		}
+
+		$js_url         = sprintf( '%s/assets/frontend/ajax.js', FLANNY_PLB_URL );
+		wp_register_script( self::JS_HANDLE_FE, $js_url, [], FLANNY_PLB_VER );
+		wp_localize_script( self::JS_HANDLE_FE, 'FlannyPostLoopBlock', [
+			'blockJs'  => self::BLOCK_JS,
+		] );
+		wp_enqueue_script( self::JS_HANDLE_FE );
 	}
 
 }

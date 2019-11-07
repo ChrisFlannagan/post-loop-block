@@ -17,6 +17,11 @@ class Core {
 	private static $instance;
 
 	/**
+	 * @var Util\Ajax $ajax
+	 */
+	public $ajax;
+
+	/**
 	 * @var Util\Render $render
 	 */
 	public $render;
