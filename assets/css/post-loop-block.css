@@ -1,0 +1,16 @@
+.wp-block-flanny-post-loop-block-btn-wrap {
+	height: 20px;
+	padding: 3px;
+}
+
+.wp-block-flanny-post-loop-block-btn {
+	font-size: 15px;
+}
+
+.wp-block-flanny-post-loop-block-btn-prev {
+	float: left;
+}
+
+.wp-block-flanny-post-loop-block-btn-next {
+	float: right;
+}

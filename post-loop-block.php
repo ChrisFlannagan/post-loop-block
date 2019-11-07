@@ -11,6 +11,10 @@ define( 'FLANNY_PLB_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'FLANNY_PLB_PATH', untrailingslashit( __DIR__ ) );
 define( 'FLANNY_PLB_VER', '1.0' );
 
+add_action( 'init', function() {
+	load_plugin_textdomain( 'flanny-plb', false, sprintf( '%s/%s', FLANNY_PLB_PATH, 'languages' ) );
+} );
+
 require_once sprintf( '%s/vendor/autoload.php', FLANNY_PLB_PATH );
 add_action( 'plugins_loaded', function() {
 	\Flanny\PLB\Core::instance();

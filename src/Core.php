@@ -16,11 +16,20 @@ class Core {
 	 */
 	private static $instance;
 
+	/**
+	 * @var Util\Render $render
+	 */
+	public $render;
+
+	/**
+	 * Core constructor.
+	 */
 	public function __construct() {
 		if ( ! empty( self::$instance ) ) {
 			return;
 		}
 
+		$this->render = new Util\Render();
 		Util\Register::hook();
 	}
 
