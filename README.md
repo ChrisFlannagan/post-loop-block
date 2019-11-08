@@ -47,3 +47,9 @@ Install required packages
 `npm install`
 
 That's it!
+
+### ===== Testing =====
+
+I didn't write any integration or unit tests for this, but to test as a user just simply make sure you activate the plugin.  The site for testing should have at least a half dozen or so blog posts so you can test paging.
+
+Once plugin is active and there are some test posts, go create a new page and add a couple of the Post Loop Block blocks to it using Gutenberg.  Save the page, go view it, click back and next and such to flip through pages of posts.
