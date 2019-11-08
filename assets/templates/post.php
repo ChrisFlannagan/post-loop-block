@@ -14,7 +14,10 @@
 	</a>
 	<div class="byline">
 		<span>
-			<?php printf( __( 'By: %s - %s', 'flanny-plb' ), get_the_author_link(), (string) date( 'm/d/Y', strtotime( $post->post_date ) ) ); ?>
+			<?php printf( __( 'By: <a href="%s">%s</a> - %s', 'flanny-plb' ),
+				get_author_posts_url( $post->post_author ),
+				get_the_author_meta( 'display_name', $post->post_author ),
+				(string) date( 'm/d/Y', strtotime( $post->post_date ) ) ); ?>
 		</span>
 	</div>
 	<div class="excerpt">

@@ -1,10 +1,6 @@
-const flannyPLB = {
-    blocks: false
-};
-
 const flannyPLBState = {
     block: false,
-    direction: 'next',
+    direction: '',
     loading: false,
 };
 
@@ -20,63 +16,71 @@ const loadPLBResponse = (data) => {
                 <h3>${post.title.rendered}</h3>
             </a>
             <div class="byline">
-		<span>By: ${post.author} - ${post.date}</span>
+        <span>By: ${post.plb_author_link} - ${post.plb_formatted_date}</span>
             </div>
             <div class="excerpt">${post.excerpt.rendered}</div>
         </div>`;
     }
 
     flannyPLBState.block.querySelector('.posts').innerHTML = postHtml;
+    flannyPLBState.block = false;
+    flannyPLBState.loading = false;
+    flannyPLBState.direction = '';
 };
 
-const flannyPLBRequest = (perPage, page) => {
-    if (flannyPLBState.loading) {
+const flannyPLBHideShowBtns = (page) => {
+    if (page === Number(flannyPLBState.block.getAttribute('data-total-pages'))) {
+        flannyPLBState.block.querySelector('.wp-block-flanny-post-loop-block-btn-next').style.display = 'none';
+    } else {
+        flannyPLBState.block.querySelector('.wp-block-flanny-post-loop-block-btn-next').style.display = 'inline-block';
+    }
+
+    if (page === 1) {
+        flannyPLBState.block.querySelector('.wp-block-flanny-post-loop-block-btn-prev').style.display = 'none';
+    } else {
+        flannyPLBState.block.querySelector('.wp-block-flanny-post-loop-block-btn-prev').style.display = 'inline-block';
+    }
+};
+
+const flannyPLBRequest = () => {
+    if (flannyPLBState.loading || flannyPLBState.block === false ) {
         return;
     }
 
-    if (flannyPLBState.direction === 'next') {
-        page = Number(page) + 1;
-        flannyPLBState.block.setAttribute('data-page', page);
-    }
+    perPage = Number(flannyPLBState.block.getAttribute('data-per-page'));
+    page = Number(flannyPLBState.block.getAttribute('data-page'));
+    page += ((flannyPLBState.direction === 'next') ? 1 : -1);
+    flannyPLBHideShowBtns(page);
 
-    const data = {
-        action:  FlannyPostLoopBlock.action,
-        perPage: perPage,
-        page:    page,
-    };
-
+    flannyPLBState.block.setAttribute('data-page', page);
     flannyPLBState.loading = true;
+
     fetch(`/wp-json/wp/v2/posts/?per_page=${perPage}&page=${page}`)
     .then(response => response.json())
     .then((data => {
         loadPLBResponse(data);
-        flannyPLBState.loading = false;
     }));
 };
 
 const flannyPLBPagination = () => {
-    for (const block of flannyPLB.blocks) {
-        flannyPLBState.block = block;
-        const prevBtn = block.querySelector('.wp-block-flanny-post-loop-block-btn-prev');
-        const nextBtn = block.querySelector('.wp-block-flanny-post-loop-block-btn-next');
-        prevBtn.addEventListener('click', (b) => {
-            const block = b.target.closest(`[data-js=${FlannyPostLoopBlock.blockJs}]`);
-            flannyPLBState.direction = 'prev';
-            flannyPLBRequest(block.getAttribute('data-per-page'), block.getAttribute('data-page'));
-        });
-        nextBtn.addEventListener('click', (b) => {
-            const block = b.target.closest(`[data-js=${FlannyPostLoopBlock.blockJs}]`);
+    document.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (e.target && e.target.classList.contains('wp-block-flanny-post-loop-block-btn-next') ) {
             flannyPLBState.direction = 'next';
-            flannyPLBRequest(block.getAttribute('data-per-page'), block.getAttribute('data-page'));
-        });
-    }
+        } else if (e.target && e.target.classList.contains('wp-block-flanny-post-loop-block-btn-prev')) {
+            flannyPLBState.direction = 'prev';
+        }
+
+        if ('' === flannyPLBState.direction) {
+            return;
+        }
+
+        flannyPLBState.block = e.target.closest(`[data-js=${FlannyPostLoopBlock.blockJs}]`);
+        flannyPLBRequest();
+    });
 };
 
-const flannyPLBInit = () => {
-    flannyPLB.blocks = document.querySelectorAll(`[data-js=${FlannyPostLoopBlock.blockJs}]`);
-    flannyPLBPagination();
-};
-
+// doc ready, fire it up
 document.addEventListener('DOMContentLoaded', () => {
-    flannyPLBInit();
+    flannyPLBPagination();
 });

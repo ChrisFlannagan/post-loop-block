@@ -38,7 +38,7 @@ class Render {
 		$query = $this->get_query( $per_page, $page );
 		$posts = $query->get_posts();
 		ob_start();
-		printf( '<div data-js="%s" data-per-page="%d" data-page="%d">', Register::BLOCK_JS, $per_page, $page );
+		printf( '<div data-js="%s" data-per-page="%d" data-page="%d" data-total-pages="%d">', Register::BLOCK_JS, $per_page, $page, $query->max_num_pages);
 		printf( '<div class="posts">' );
 		foreach ( $posts as $post ) {
 			include sprintf( '%s/assets/templates/post.php', FLANNY_PLB_PATH );
@@ -65,6 +65,7 @@ class Render {
 			'post_type' => [ 'post' ],
 			'post_status' => 'publish',
 			'posts_per_page' => $per_page,
+			'post__not_in' => [ get_the_ID() ], // let's never show a post on it's own page
 			'paged' => $page,
 		] );
 	}

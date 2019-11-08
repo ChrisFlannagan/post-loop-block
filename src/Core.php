@@ -17,11 +17,6 @@ class Core {
 	private static $instance;
 
 	/**
-	 * @var Util\Ajax $ajax
-	 */
-	public $ajax;
-
-	/**
 	 * @var Util\Render $render
 	 */
 	public $render;
@@ -36,6 +31,7 @@ class Core {
 
 		$this->render = new Util\Render();
 		Util\Register::hook();
+		Util\Rest_Api::hook();
 	}
 
 	/**
