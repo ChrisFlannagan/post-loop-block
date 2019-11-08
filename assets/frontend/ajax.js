@@ -9,17 +9,19 @@ const loadPLBResponse = (data) => {
     for (const post of data) {
         console.log(post);
         postHtml = `${postHtml}
-        <div class="flanny-plb-post">
-            <a href="${post.link}"
-               class="title"
-               aria-label="${post.title.rendered}">
-                <h3>${post.title.rendered}</h3>
-            </a>
-            <div class="byline">
-        <span>By: ${post.plb_author_link} - ${post.plb_formatted_date}</span>
-            </div>
-            <div class="excerpt">${post.excerpt.rendered}</div>
-        </div>`;
+        <article class="flanny-plb-post post type-post status-publish format-standard entry">
+            <header class="entry-header">
+                    <h2 class="entry-title">
+                        <a href="${post.link}"
+                           class="title"
+                           aria-label="${post.title.rendered}">
+                            ${post.title.rendered}
+                        </a>
+                    </h2>
+                    <span class="byline">By: ${post.plb_author_link} - ${post.plb_formatted_date}</span>
+            </header>
+            <div class="entry-excerpt">${post.excerpt.rendered}</div>
+        </article>`;
     }
 
     flannyPLBState.block.querySelector('.posts').innerHTML = postHtml;

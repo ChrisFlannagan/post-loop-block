@@ -7,3 +7,5 @@ Requires PHP: 7.2
 Stable tag: 1.0
 
 A WP Gutenberg block for display user defined amount of posts.
+
+See README.md for dev notes
