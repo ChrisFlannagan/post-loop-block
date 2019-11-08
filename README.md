@@ -2,7 +2,7 @@
 
 This WordPress plugin generates a new custom block for the Gutenberg editor.  The purpose of the block is to allow a page editor the ability to display a post loop with previous and forward page navigation.  It also gives the ability to set how many posts are in the loop per page.
 
-This was a learning project.  I haven't built a completely custom block yet, only toyed around and provided support for other blocks.  Was really cool diving into the Gute's API and doing some JS work I haven't dealth with in a while.
+This was a learning project.  I haven't built a completely custom block yet, only toyed around and provided support for other blocks.  Was really cool diving into the Gute's API and doing some JS work I haven't dealt with in a while.
 
 ### ===== Dev Notes =====
 
@@ -12,9 +12,9 @@ This was a learning project.  I haven't built a completely custom block yet, onl
 
 I chose to stick my functional classes into a Utility namespace and make them static for a couple of reason.
 
- - They don't really do anything more than provided some hooked or filtered functionality for the js and front end display.
+ - They don't really do anything more than provide some hooked or filtered functionality for the js and front end display.
  - I'm used to build server side heavy web apps with large scoping and architecture before writing code.  Typically I use containers and direct injection but that felt like overkill for this plugin.
- - I'm not using service providers and I had instantiating a class when it's not needed.
+ - I'm not using service providers and I hate instantiating a class when it's not needed.
 
 --- 
  
@@ -30,7 +30,7 @@ I also didn't think about the fact there could be multiple post loop blocks on t
 
 #### CSS
 
-I haven't done theming in quite some time and when I do I typically use Post CSS or SASS.  I went with the bare minimum of styling needs here and just used a small amount of vanilla css.  Implementing PCSS with webpack definitely felt like too much for this project.
+I haven't done themeing in quite some time and when I do I typically use Post CSS or SASS.  I went with the bare minimum of styling needs here and just used a small amount of vanilla css.  Implementing PCSS with webpack definitely felt like too much for this project.
 
 ### ===== Build =====
 
