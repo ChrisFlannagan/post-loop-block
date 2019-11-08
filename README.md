@@ -2,6 +2,8 @@
 
 This WordPress plugin generates a new custom block for the Gutenberg editor.  The purpose of the block is to allow a page editor the ability to display a post loop with previous and forward page navigation.  It also gives the ability to set how many posts are in the loop per page.
 
+This was a learning project.  I haven't built a completely custom block yet, only toyed around and provided support for other blocks.  Was really cool diving into the Gute's API and doing some JS work I haven't dealth with in a while.
+
 ### ===== Dev Notes =====
 
 #### PHP
